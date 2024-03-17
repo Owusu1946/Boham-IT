@@ -188,126 +188,107 @@
       </div>
     </div>
 
-    <style>
-      /* CSS styles for toast message */
-      .toast-container {
-          position: fixed;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 9999;
-      }
-
-      .toast {
-          padding: 10px 20px;
-          border-radius: 5px;
-          font-size: 16px;
-          font-weight: bold;
-          margin-bottom: 10px;
-      }
-
-      .toast.success {
-          background-color: #4CAF50;
-          color: #fff;
-      }
-
-      .toast.error {
-          background-color: #f44336;
-          color: #fff;
-      }
-  </style>
-</head>
-<body>
-
-<section class="contact-section pb-100">
-  <div class="container">
-      <div class="section-title text-center">
+    <section class="contact-section pb-100">
+      <div class="container">
+        <div class="section-title text-center">
           <span>Contact Us</span>
           <h2>Drop A Message For Any Query</h2>
           <p>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout.
+            It is a long established fact that a reader will be distracted by
+            the readable content of a page when looking at its layout.
           </p>
-      </div>
-      <div class="contact-wrap pt-45">
+        </div>
+        <div class="contact-wrap pt-45">
           <div class="contact-wrap-form">
-              <form id="contactForm" action="api/contact.js" method="POST" onsubmit="submitForm(event)">
-                  <div class="row">
-                      <div class="col-lg-6 col-sm-6">
-                          <div class="form-group">
-                              <input type="text" name="name" id="name" class="form-control" required placeholder="Your Name">
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-sm-6">
-                          <div class="form-group">
-                              <input type="email" name="email" id="email" class="form-control" required placeholder="Your Email">
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-sm-6">
-                          <div class="form-group">
-                              <input type="tel" name="phone_number" id="phone_number" class="form-control" required placeholder="Your Phone">
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-sm-6">
-                          <div class="form-group">
-                              <input type="text" name="msg_subject" id="msg_subject" class="form-control" required placeholder="Your Subject">
-                          </div>
-                      </div>
-                      <div class="col-lg-12 col-md-12">
-                          <div class="form-group">
-                              <textarea name="message" id="message" class="form-control" cols="30" rows="8" required placeholder="Your Message"></textarea>
-                          </div>
-                      </div>
-                      <div class="col-lg-12 col-md-12 text-center">
-                          <button type="submit" class="default-btn page-btn text-center">Send Message</button>
-                          <div id="msgSubmit" class="h3 text-center hidden"></div>
-                          <div class="clearfix"></div>
-                      </div>
+            <form id="contactForm" action="api/contact.js" method="POST">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      class="form-control"
+                      required
+                      data-error="Please enter your name"
+                      placeholder="Your Name"
+                    />
+                    <div class="help-block with-errors"></div>
                   </div>
-              </form>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      class="form-control"
+                      required
+                      data-error="Please enter your email"
+                      placeholder="Your Email"
+                    />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="phone_number"
+                      id="phone_number"
+                      required
+                      data-error="Please enter your number"
+                      class="form-control"
+                      placeholder="Your Phone"
+                    />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="msg_subject"
+                      id="msg_subject"
+                      class="form-control"
+                      required
+                      data-error="Please enter your subject"
+                      placeholder="Your Subject"
+                    />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                    <textarea
+                      name="message"
+                      class="form-control"
+                      id="message"
+                      cols="30"
+                      rows="8"
+                      required
+                      data-error="Write your message"
+                      placeholder="Your Message"
+                    ></textarea>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 text-center">
+                  <button
+                    type="submit"
+                    class="default-btn page-btn text-center"
+                  >
+                    Send Message
+                  </button>
+                  <div id="msgSubmit" class="h3 text-center hidden"></div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </form>
           </div>
+        </div>
       </div>
-  </div>
-</section>
-
-<script>
-  // Function to handle form submission
-  function submitForm(event) {
-      event.preventDefault();
-      const form = document.getElementById('contactForm');
-      const formData = new FormData(form);
-
-      // Send form data using Fetch API
-      fetch('contact.php', {
-          method: 'POST',
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              showToast('Thank you for your message. We will get back to you soon.', true);
-              form.reset(); // Reset form fields
-          } else {
-              showToast('Sorry, there was an error sending your message.', false);
-          }
-      })
-      .catch(error => {
-          showToast('Sorry, there was an error sending your message.', false);
-          console.error('Error:', error);
-      });
-  }
-
-  // Function to display toast message
-  function showToast(message, isSuccess) {
-      const toastContainer = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = isSuccess ? 'toast success' : 'toast error';
-      toast.textContent = message;
-      toastContainer.appendChild(toast);
-      setTimeout(() => {
-          toast.remove();
-      }, 3000); // Remove the toast after 3 seconds
-  }
-</script>
+    </section>
 
     <div class="map-area">
       <div class="container-fluid p-0">
