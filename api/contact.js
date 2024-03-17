@@ -1,30 +1,35 @@
 // api/contact.js
+import nodemailer from 'nodemailer';
 
-export default function handler(req, res) {
+const transporter = nodemailer.createTransport({
+    host: 'smtp.mailgun.org',
+    port: 587,
+    secure: false, // false for 587, true for 465
+    auth: {
+        user: 'postmaster@YOUR_MAILGUN_DOMAIN',
+        pass: process.env.MAILGUN_API_KEY,
+    },
+});
+
+export default function (req, res) {
     if (req.method === 'POST') {
-        // Handle form submission
         const formData = req.body;
-        // Process the form data (e.g., send email)
-        // Example: Send email using SendGrid
-        // replace SENDGRID_API_KEY with your actual SendGrid API key
-        const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        const msg = {
-            to: 'your-email@example.com', // Replace with your email address
+        const mailOptions = {
             from: formData.email,
+            to: 'your-email@example.com', // Replace with your email address
             subject: formData.msg_subject,
             text: formData.message,
         };
-        sgMail.send(msg)
-            .then(() => {
-                console.log('Email sent');
-                res.status(200).json({ message: 'Form submitted successfully' });
-            })
-            .catch((error) => {
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
                 console.error(error);
-                res.status(500).json({ message: 'Internal server error' });
-            });
+                res.status(500).send('Internal server error');
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.status(200).send('Form submitted successfully');
+            }
+        });
     } else {
-        res.status(405).json({ message: 'Method Not Allowed' });
+        res.status(405).send('Method Not Allowed');
     }
 }
