@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false, // false for 587, true for 465
     auth: {
-        user: 'postmaster@YOUR_MAILGUN_DOMAIN',
+        user: 'postmaster@https://app.mailgun.com/app/sending/domains/sandbox2efef77b306c49559a5854247cf2fdc9.mailgun.org',
         pass: process.env.MAILGUN_API_KEY,
     },
 });
@@ -16,7 +16,7 @@ export default function (req, res) {
         const formData = req.body;
         const mailOptions = {
             from: formData.email,
-            to: 'your-email@example.com', // Replace with your email address
+            to: 'owusukenneth77@gmail.com', // Replace with your email address
             subject: formData.msg_subject,
             text: formData.message,
         };
