@@ -2286,6 +2286,12 @@ img {
     margin-bottom: 20px
 }
 
+.banner-content span {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 20px
+}
+
 .banner-content p {
     margin-bottom: 40px;
     max-width: 560px
