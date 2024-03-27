@@ -22,3 +22,16 @@ const textLoad = () => {
 
 textLoad();
 setInterval(textLoad, 12000);
+
+const textB = document.querySelector(".text.first-text");
+const textLoadB = () => {
+    setTimeout(() => {
+        text.textContent = "Flexible";
+    }, 16000
+    );
+
+    setTimeoutB(() => {
+        text.textContent = "Available";
+    }, 20000);
+}
+
